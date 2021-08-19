@@ -10,27 +10,23 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-arg = argparse.ArgumentParser()
-arg.add_argument('--thehive_url', help='Configure TheHive URL | Example http://127.0.0.1:9000', required=True)
-arg.add_argument('--api_key', help='Configure API Key for organisation user, this user will be the author of all alerts', required=True)
-arg.add_argument('--graylog_url', help='Configure Graylog URL', required=True)
-arg.add_argument('--ip', help='Configure ip where application will be launch', required=True)
-arg.add_argument('--port', help='Configure port where application will be launch', default=5000)
-
-args = vars(arg.parse_args())
-thehive_url = args["thehive_url"]
-api_key = args["api_key"]
-graylog_url = args["graylog_url"]
-ip = args["ip"]
-port = args["port"]
+thehive_url = ""
+api_key = ""
+graylog_url = ""
+ip = "0.0.0.0"
+port = "5000"
 
 api = TheHiveApi(thehive_url, api_key)
 
 graylog_url = graylog_url
 
-log_dir = './log/'
+log_dir = './log'
 if not os.path.exists(log_dir):
     os.mkdir(log_dir)
+
+# Add logging
+logging.basicConfig(filename='./log/graylog2thehive4.log', filemode='w', format='%(asctime)s - graylog2thehive - %(levelname)s - %(message)s', level=logging.INFO)
+logging.info("API started")
 
 # Webhook to process Graylog HTTP Notification
 @app.route('/webhook', methods=['POST'])

@@ -1,0 +1,12 @@
+version: "3"
+
+
+services:
+
+    graylog2thehive4:
+        build: .
+        container_name: "graylog2thehive4"
+        ports:
+          - 5000:5000
+        volumes:
+          - "./logs:/opt/graylog2thehive4/logs"
