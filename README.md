@@ -16,52 +16,21 @@ This app should be installed on the host where TheHive4 is installed.
 - Clone repo:
 
 ```
-git clone git@github.com:malinkinsa/graylog2thehive4.git /opt/graylog2thehive4
+git clone https://github.com/Baxytra/graylog2thehive4
 ```
 
-- Install python requirements:
+- Configure `TheHive4 URL`, `API key`, `Graylog url`, `Ip where application will be work` and `Port where application will be work (optional)` in graylog2thehive4.py:
 
 ```
-cd /opt/graylog2thehive4
-pip3 install -r requirements.txt
+vim graylog2thehive4.py
 ```
 
-- Copy init.d file:
+- Run docker-compose
 
 ```
-cp init.d/graylog2thehive4.service /etc/systemd/system/
+cd graylog2thehive4
+docker-compose up -d
 ```
-
-- Configure `TheHive4 URL`, `API key`, `Graylog url`, `Ip where application will be work` and `Port where application will be work (optional)` in graylog2thehive4.service:
-
-```
-vim /etc/systemd/system/graylog2thehive4.service
-systemctl daemon-reload
-```
-
-- Configure application log rotation:
-
-```
-cp logrotate.d/graylog2thehive /etc/logrotate.d/
-```
-
-- Launch application as a service and add to autostart:
-
-```
-systemctl start graylog2thehive4.service
-systemctl enable graylog2thehive4.service
-```
-
-- Launch application from command line with specified `TheHive4 URL`, `API key`, `Graylog url`, `Ip where application will be work` and `Port where application will be work (optional)`:
-
-```
-cd /opt/graylog2thehive4/
-python3 graylog2thehive4.py --thehive_url= --api_key= --graylog_url= --ip= --port=
-```
-
-## Using Docker
-
-[Docker Image for Graylog2TheHive4](https://github.com/malinkinsa/docker-graylog2thehive4)
 
 ## Setup Graylog Notification
 
